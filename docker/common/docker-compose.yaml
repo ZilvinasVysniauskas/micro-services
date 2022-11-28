@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  config-server:
+    build:
+      context: ./../../confsrv
+    ports:
+      - "8888:8888"
+  licensingserver:
+    network_mode: host
+    build:
+      context: ./../../licenses
+    container_name: licensing_service
+    environment:
+      PROFILE: "default"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      CONFIGSERVER_PORT: "8888"
+      DATABASESERVER_PORT: "5432"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - config-server
+    restart: always
+  db:
+    image: 'postgres:13.1-alpine'
+    restart: always
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=eagle_eye_local
