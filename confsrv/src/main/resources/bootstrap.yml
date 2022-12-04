@@ -1,16 +1,3 @@
-server:
-  port: 8888
-
 spring:
-  cloud:
-    config:
-      enabled: false
-      server:
-        git:
-          uri: https://github.com/ZilvinasVysniauskas/config-repo/
-          searchPaths: licensingservice,organizationservice
-          username: native-cloud-apps
-          password: 0ffended
-          default-label: master
-
-management:endpoints:web:exposure:include: "*"
+  application:
+    name: configserver

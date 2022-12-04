@@ -1,28 +1,54 @@
 version: '3'
 
 services:
-  config-server:
-    build:
-      context: ./../../confsrv
-    ports:
-      - "8888:8888"
-  licensingserver:
-    network_mode: host
-    build:
-      context: ./../../licenses
-    container_name: licensing_service
-    environment:
-      PROFILE: "default"
-      CONFIGSERVER_URI: "http://configserver:8888"
-      CONFIGSERVER_PORT: "8888"
-      DATABASESERVER_PORT: "5432"
-      ENCRYPT_KEY: "IMSYMMETRIC"
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-      - config-server
-    restart: always
+#  eureka:
+#    build:
+#      context: ./../../eureka
+#    ports:
+#      - "8761:8761"
+#  config-server:
+#    build:
+#      context: ./../../confsrv
+#    ports:
+#      - "8888:8888"
+#  licensingserver:
+#    network_mode: host
+#    build:
+#      context: ./../../licenses
+#    container_name: licensing_service
+#    environment:
+#      PROFILE: "default"
+#      CONFIGSERVER_URI: "http://configserver:8888"
+#      CONFIGSERVER_PORT: "8888"
+#      DATABASESERVER_PORT: "5432"
+#      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+#      EUREKASERVER_PORT: "8761"
+#      ENCRYPT_KEY: "IMSYMMETRIC"
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#      - config-server
+#      - eureka
+#    restart: always
+#  organizationservice:
+#    build:
+#      context: ../../organization-service
+#    ports:
+#      - "8085:8085"
+#    environment:
+#      PROFILE: "default"
+#      CONFIGSERVER_URI: "http://configserver:8888"
+#      CONFIGSERVER_PORT: "8888"
+#      DATABASESERVER_PORT: "5432"
+#      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+#      EUREKASERVER_PORT: "8761"
+#      ENCRYPT_KEY: "IMSYMMETRIC"
+#    depends_on:
+#      - eureka
+#      - db
+#      - config-server
+#    restart: always
   db:
     image: 'postgres:13.1-alpine'
     restart: always
