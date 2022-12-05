@@ -1,12 +1,13 @@
 package com.thoughtmechanix.licenses.services;
 
 import com.thoughtmechanix.licenses.client.OrganizationDiscoveryClient;
-import com.thoughtmechanix.licenses.client.OrganizationFeignClient;
 import com.thoughtmechanix.licenses.client.OrganizationRestTemplateClient;
 import com.thoughtmechanix.licenses.config.ServiceConfig;
 import com.thoughtmechanix.licenses.model.License;
 import com.thoughtmechanix.licenses.model.Organization;
 import com.thoughtmechanix.licenses.repository.LicenseRepository;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +15,23 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class LicenseService {
 
-    @Autowired
-    private LicenseRepository licenseRepository;
+    private final LicenseRepository licenseRepository;
 
-    @Autowired
-    ServiceConfig config;
+    private final ServiceConfig config;
+    private final OrganizationRestTemplateClient organizationRestClient;
 
-    @Autowired
-    OrganizationFeignClient organizationFeignClient;
 
-    @Autowired
-    OrganizationRestTemplateClient organizationRestClient;
-
-    @Autowired
-    OrganizationDiscoveryClient organizationDiscoveryClient;
+    private final OrganizationDiscoveryClient organizationDiscoveryClient;
 
     private Organization retrieveOrgInfo(String organizationId, String clientType){
         Organization organization = null;
 
         switch (clientType) {
             case "feign" -> {
-                System.out.println("I am using the feign client");
-                organization = organizationFeignClient.getOrganization(organizationId);
+                System.out.println("I am using the feign client and I don't work");
             }
             case "rest" -> {
                 System.out.println("I am using the rest client");
