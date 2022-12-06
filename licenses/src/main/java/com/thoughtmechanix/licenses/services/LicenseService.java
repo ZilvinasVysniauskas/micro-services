@@ -19,7 +19,6 @@ import java.util.UUID;
 public class LicenseService {
 
     private final LicenseRepository licenseRepository;
-
     private final ServiceConfig config;
     private final OrganizationRestTemplateClient organizationRestClient;
 

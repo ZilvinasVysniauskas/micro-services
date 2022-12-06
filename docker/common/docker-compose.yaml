@@ -7,40 +7,39 @@ services:
 #    ports:
 #      - "8761:8761"
 #  config-server:
+#    network_mode: host
 #    build:
 #      context: ./../../confsrv
 #    ports:
 #      - "8888:8888"
-  licensingserver:
-    network_mode: host
-    build:
-      context: ./../../licenses
-    container_name: licensing_service
-    environment:
-      PROFILE: "default"
-      CONFIGSERVER_URI: "http://configserver:8888"
-      CONFIGSERVER_PORT: "8888"
-      DATABASESERVER_PORT: "5432"
-      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT: "8761"
-      ENCRYPT_KEY: "IMSYMMETRIC"
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-      - config-server
-      - eureka
-    restart: always
+#    restart: always
+#    depends_on:
+#      - eureka
+#  licensingserver:
+#    network_mode: host
+#    build:
+#      context: ./../../licenses
+#    container_name: licensing_service
+#    environment:
+#      PROFILE: "default"
+#      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+#      EUREKASERVER_PORT: "8761"
+#      ENCRYPT_KEY: "IMSYMMETRIC"
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#      - config-server
+#      - eureka
+#    restart: always
 #  organizationservice:
+#    network_mode: host
 #    build:
 #      context: ../../organization-service
 #    ports:
 #      - "8085:8085"
 #    environment:
 #      PROFILE: "default"
-#      CONFIGSERVER_URI: "http://configserver:8888"
-#      CONFIGSERVER_PORT: "8888"
-#      DATABASESERVER_PORT: "5432"
 #      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
 #      EUREKASERVER_PORT: "8761"
 #      ENCRYPT_KEY: "IMSYMMETRIC"
@@ -49,13 +48,13 @@ services:
 #      - db
 #      - config-server
 #    restart: always
-#  db:
-#    image: 'postgres:13.1-alpine'
-#    restart: always
-#    container_name: db
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#      - POSTGRES_DB=eagle_eye_local
+  db:
+    image: 'postgres:13.1-alpine'
+    restart: always
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=eagle_eye_local
